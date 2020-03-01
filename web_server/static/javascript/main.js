@@ -41,7 +41,7 @@ function initializeDZI(attributes) {
 }
 
 function setup() {
-	createCanvas(1024, 720);
+	createCanvas(1024, 800);
 	loadDZIXML(initializeDZI);
 }
 
@@ -50,5 +50,9 @@ function windowResized() {
 }
 
 function draw() {
-	background(51, 51, 89);
+	background(27, 27, 37);
+
+	pyramid.display();
+	noLoop();
+
 }

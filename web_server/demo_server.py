@@ -2,8 +2,9 @@
 
 Flask server that serves one test SVS File's Deep Zoom Image
 The following calls can be made to this flask server:
-	1. /slide/dzi
-	2. /slide/tile/<int:level>/<int:col>_<int:row>.<format>
+	1. / 
+	2. /slide/dzi
+	3. /slide/tile/<int:level>/<int:col>_<int:row>.<format>
 
 This file is called from main.py in the root directory.
 
@@ -15,7 +16,7 @@ with os.add_dll_directory(os.path.join(os.getcwd(), "dll_includes/openslide-win6
 	from openslide import open_slide
 	from openslide.deepzoom import DeepZoomGenerator
 
-from flask import Flask, abort, make_response
+from flask import Flask, abort, make_response, render_template
 from io import BytesIO
 
 
@@ -49,6 +50,11 @@ def load_slide():
 		tile_size=DEEPZOOM_TILE_SIZE, 
 		overlap=DEEPZOOM_OVERLAP, 
 		limit_bounds=DEEPZOOM_LIMIT_BOUNDS)
+
+
+@app.route("/")
+def index():
+	return render_template("demo.html")
 
 
 @app.route("/slide/dzi")

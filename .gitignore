@@ -113,7 +113,9 @@ dmypy.json
 /venv
 
 # OpenSlide DLL files
-/openslide_win64_20171122
+/dll_includes/*
+!/dll_includes/README.md
 
 # SVS Image Files
-/svs_images/*.svs
+/svs_images/*
+!/svs_images/README.md

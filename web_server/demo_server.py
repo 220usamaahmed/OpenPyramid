@@ -11,7 +11,7 @@ This file is called from main.py in the root directory.
 
 import os
 
-with os.add_dll_directory(os.path.join(os.getcwd(), "openslide_win64_20171122/bin")):
+with os.add_dll_directory(os.path.join(os.getcwd(), "dll_includes/openslide-win64-20171122/bin")):
 	from openslide import open_slide
 	from openslide.deepzoom import DeepZoomGenerator
 

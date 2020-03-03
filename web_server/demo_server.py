@@ -4,7 +4,9 @@ Flask server that serves one test SVS File's Deep Zoom Image
 The following calls can be made to this flask server:
 	1. / 
 	2. /slide/dzi
-	3. /slide/tile/<int:level>/<int:col>_<int:row>.<format>
+	3. /slide/<int:level>/<int:col>_<int:row>.<format>
+
+In essence it is emulating a folder for a DZI image called slide.
 
 This file is called from main.py in the root directory.
 
@@ -67,7 +69,7 @@ def dzi():
 	return response
 
 
-@app.route("/slide/tile/<int:level>/<int:col>_<int:row>.<format>")
+@app.route("/slide/<int:level>/<int:col>_<int:row>.<format>")
 def tile(level, col, row, format):
 	format = format.lower()
 

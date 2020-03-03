@@ -63,7 +63,7 @@ class Pyramid {
 		this.layers[this.currentLayerIndex].display(this.globalDX, this.globalDY);
 	}
 
-	handleTranslation(dx, dy) { 
+	handleTranslation(dx, dy) {
 		this.globalDX += dx / this.layers[this.currentLayerIndex].rX;
 		this.globalDY += dy / this.layers[this.currentLayerIndex].rY; 
 	}

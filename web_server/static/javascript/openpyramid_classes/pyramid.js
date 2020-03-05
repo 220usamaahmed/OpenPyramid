@@ -56,7 +56,10 @@ class Pyramid {
 			this.layers.push(new Layer(i, dimensions[i][0], dimensions[i][1], tileSize, overlap, canvasWidth, canvasHeight));		
 			if (dimensions[i][0] <= canvasWidth && dimensions[i][1] <= canvasHeight) this.currentLayerIndex = i;
 		}
-	
+
+		// Centering Layers
+		this.globalDX = (canvasWidth - this.layers[this.currentLayerIndex].width) / (2 * this.layers[this.currentLayerIndex].rX);
+		this.globalDY = (canvasHeight - this.layers[this.currentLayerIndex].height) / (2 * this.layers[this.currentLayerIndex].rY);
 	}
 
 	display() {
@@ -65,13 +68,23 @@ class Pyramid {
 
 	handleTranslation(dx, dy) {
 		this.globalDX += dx / this.layers[this.currentLayerIndex].rX;
-		this.globalDY += dy / this.layers[this.currentLayerIndex].rY; 
+		this.globalDY += dy / this.layers[this.currentLayerIndex].rY;
 	}
 
 	handleZoom(dz) {
+
+		let previousLayerWidth = this.layers[this.currentLayerIndex].width;
+		let previousLayerHeight = this.layers[this.currentLayerIndex].height;
+		let previousLayerRx = this.layers[this.currentLayerIndex].rX;
+		let previousLayerRy = this.layers[this.currentLayerIndex].rY;
+
 		this.currentLayerIndex -= dz;
 		if (this.currentLayerIndex < 0) this.currentLayerIndex = 0;
 		else if (this.currentLayerIndex >= this.layers.length) this.currentLayerIndex = this.layers.length - 1;
+	
+		this.globalDX += (previousLayerWidth - this.layers[this.currentLayerIndex].width) / (2 * (previousLayerRx - this.layers[this.currentLayerIndex].rX))**2;
+		this.globalDY += (previousLayerHeight - this.layers[this.currentLayerIndex].height) / (2 * (previousLayerRy - this.layers[this.currentLayerIndex].rY))**2;
+
 	}
 }
 

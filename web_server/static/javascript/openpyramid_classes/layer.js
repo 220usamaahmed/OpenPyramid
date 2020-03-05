@@ -1,6 +1,12 @@
 /*
  * NOTE:
  * Moving in the negative direction the tiles are not removed properly
+ * From layer 20 onwards the download function gets called way too many times.
+ * When you call fetct, tell the dictionary that that image will be eventually
+ * available so it is not requested again and again.
+ * if you zoom out before the layer has had time to display, and the layer
+ * above displays its image, then the layer below still draws.
+ * At higher zoom levels the display function is getting called more???
  * _____________________________________________________________________________
  */
 
@@ -24,21 +30,17 @@ class Layer {
 
 	display(dx, dy) {
 		let tileXIndex = (dx < 0) ? floor(-dx * this.rX / this.tileSize) : 0; 
-		let x = (dx < 0) ? (dx * this.rX) % this.tileSize : dx * this.rX; // This might not be wrong
-
-		let tilesOnDisplay = 0; // For Debugging
+		let x = (dx < 0) ? (dx * this.rX) % this.tileSize : dx * this.rX;
 
 		while (tileXIndex < this.tileCountX && x < this.canvasWidth) {
 
-			let tileYIndex = (dy < 0) ? floor(-dy * this.rY / this.tileSize) : 0; 
-			let y = (dy < 0) ? (dy * this.rY) % this.tileSize : dy * this.rX; // This might not be wrong
+			let tileYIndex = (dy < 0) ? floor(-dy * this.rY / this.tileSize) : 0;
+			let y = (dy < 0) ? (dy * this.rY) % this.tileSize : dy * this.rY;
 
 			while (tileYIndex < this.tileCountY && y < this.canvasHeight) {
 
-				this.displayDebugBoxes(x, y, tileXIndex, tileYIndex);
-				this.displayTile(x, y,tileXIndex, tileYIndex);
-
-				tilesOnDisplay++;
+				// this.displayDebugBoxes(x, y, tileXIndex, tileYIndex);
+				this.displayTile(x, y, tileXIndex, tileYIndex);
 
 				y += this.tileSize;
 				tileYIndex++;
@@ -46,17 +48,19 @@ class Layer {
 			x += this.tileSize;
 			tileXIndex++;
 		}
-
-		console.log("Tiles on Display: " + tilesOnDisplay);
 	}
 
 	displayTile(x, y, tileXIndex, tileYIndex) {
 		let url = "/slide/" + this.level + "/" + tileXIndex + "_" + tileYIndex + ".jpeg";
-		if (url in this.images) image(this.images[url], x, y);
+		if (url in this.images) {
+			console.log("HERE");
+			if (this.images[url] != null) image(this.images[url], x, y);
+		}
 		else {
+			this.images[url] = null;
 			let img = loadImage(url, img => {
 				this.images[url] = img;
-				image(img, x, y);
+				// image(img, x, y);
 			});
 		}
 	}

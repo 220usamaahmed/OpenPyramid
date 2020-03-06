@@ -53,7 +53,6 @@ class Layer {
 	displayTile(x, y, tileXIndex, tileYIndex) {
 		let url = "/slide/" + this.level + "/" + tileXIndex + "_" + tileYIndex + ".jpeg";
 		if (url in this.images) {
-			console.log("HERE");
 			if (this.images[url] != null) image(this.images[url], x, y);
 		}
 		else {
@@ -61,6 +60,7 @@ class Layer {
 			let img = loadImage(url, img => {
 				this.images[url] = img;
 				// image(img, x, y);
+				redraw();
 			});
 		}
 	}

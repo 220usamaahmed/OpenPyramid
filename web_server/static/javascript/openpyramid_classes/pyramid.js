@@ -1,6 +1,7 @@
 /*
  * NOTE:
  * The initialize method needs error handling
+ * If you zoom past the last layer, nothing gets displayed.
  * _____________________________________________________________________________
  */
 
@@ -79,11 +80,19 @@ class Pyramid {
 		let previousLayerRy = this.layers[this.currentLayerIndex].rY;
 
 		this.currentLayerIndex -= dz;
-		if (this.currentLayerIndex < 0) this.currentLayerIndex = 0;
-		else if (this.currentLayerIndex >= this.layers.length) this.currentLayerIndex = this.layers.length - 1;
+
+		if (this.currentLayerIndex < 0) {
+			this.currentLayerIndex = 0;
+			return;
+		} else if (this.currentLayerIndex >= this.layers.length) {
+			this.currentLayerIndex = this.layers.length - 1;
+			return;
+		}
 	
 		this.globalDX += (previousLayerWidth - this.layers[this.currentLayerIndex].width) / (2 * (previousLayerRx - this.layers[this.currentLayerIndex].rX))**2;
 		this.globalDY += (previousLayerHeight - this.layers[this.currentLayerIndex].height) / (2 * (previousLayerRy - this.layers[this.currentLayerIndex].rY))**2;
+
+		console.log("Current Layer: " + this.layers[this.currentLayerIndex].level + ": " + this.layers[this.currentLayerIndex].width + "x" + this.layers[this.currentLayerIndex].height);
 
 	}
 }

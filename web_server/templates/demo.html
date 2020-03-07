@@ -7,10 +7,20 @@
 </head>
 <body>
 
-	<script type="text/javascript" src="{{ url_for('static', filename='javascript/p5/p5.min.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='javascript/openpyramid_classes/pyramid.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='javascript/openpyramid_classes/layer.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='javascript/openpyramid.js') }}"></script>
+	<div id="op-canvas-holder"></div>
+
+	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/openpyramid_classes/pyramid.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/openpyramid_classes/layer.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/openpyramid.js') }}"></script>
+
+	<script type="text/javascript">
+		
+		let op = new OpenPyramid({
+			canvasHolderID: "op-canvas-holder",
+			url: "http://127.0.0.1:5000/slide",
+		});
+
+	</script>
 
 </body>
 </html>

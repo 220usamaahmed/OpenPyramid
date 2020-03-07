@@ -3,6 +3,9 @@
 	margin: 0;
 }
 
-body {
-	padding: 32px;
+#op-canvas-holder {
+	width: 100vw;
+	height: 100vh;
+
+	background-color: black;
 }

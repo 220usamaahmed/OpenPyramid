@@ -1,7 +1,6 @@
 /*
  * NOTE:
  * The initialize method needs error handling
- * If you zoom past the last layer, nothing gets displayed.
  * _____________________________________________________________________________
  */
 
@@ -28,9 +27,12 @@ class Pyramid {
 
 	constructor(DZI_attributes, canvasWidth, canvasHeight) {
 		this.attributes = DZI_attributes;
-		this.currentLayerIndex = 0;
+		this.canvasWidth = canvasWidth;
+		this.canvasHeight = canvasHeight;
 		this.globalDX = 0;
 		this.globalDY = 0;
+		this.currentLayerIndex = 0;
+		this.tileSize = DZI_attributes.tileSize;
 		this.initializeLayers(canvasWidth, canvasHeight);
 	}
 
@@ -41,8 +43,8 @@ class Pyramid {
 		let dimensions = [];
 		while (width > 1 || height > 1) {
 			dimensions.push([width, height]);
-			width = ceil(width / 2);
-			height = ceil(height / 2);
+			width = Math.ceil(width / 2);
+			height = Math.ceil(height / 2);
 		}
 		dimensions.push([width, height]);
 		dimensions.reverse();
@@ -54,7 +56,17 @@ class Pyramid {
 		this.layers = [];
 
 		for (let i = 0; i < dimensions.length; i++) {
-			this.layers.push(new Layer(i, dimensions[i][0], dimensions[i][1], tileSize, overlap, canvasWidth, canvasHeight));		
+			// this.layers.push(new Layer(i, dimensions[i][0], dimensions[i][1], tileSize, overlap, canvasWidth, canvasHeight));		
+		// for (let dimension in dimensions) {
+			this.layers.push({
+				width: dimensions[i][0],
+				height: dimensions[i][1],
+				tileCountX: Math.ceil(dimensions[i][0] / tileSize),
+				tileCountY: Math.ceil(dimensions[i][1] / tileSize),
+				rX: dimensions[i][0] / canvasWidth,
+				rY: dimensions[i][1] / canvasHeight,
+				images: {}
+			});
 			if (dimensions[i][0] <= canvasWidth && dimensions[i][1] <= canvasHeight) this.currentLayerIndex = i;
 		}
 
@@ -63,8 +75,55 @@ class Pyramid {
 		this.globalDY = (canvasHeight - this.layers[this.currentLayerIndex].height) / (2 * this.layers[this.currentLayerIndex].rY);
 	}
 
-	display() {
-		this.layers[this.currentLayerIndex].display(this.globalDX, this.globalDY);
+	display(c) {
+		// this.layers[this.currentLayerIndex].display(c, this.globalDX, this.globalDY);
+
+		// Is this just reference to the object or creates new copy??
+		let layer = this.layers[this.currentLayerIndex];
+
+		let tileXIndex = (this.globalDX < 0) ? Math.floor(-this.globalDX * layer.rX / this.attributes.tileSize) : 0; 
+		let x = (this.globalDX < 0) ? (this.globalDX * layer.rX) % this.attributes.tileSize : this.globalDX * layer.rX;
+
+		while (tileXIndex < layer.tileCountX && x < this.canvasWidth) {
+
+			
+			let tileYIndex = (this.globalDY < 0) ? Math.floor(-this.globalDY * layer.rY / this.attributes.tileSize) : 0;
+			let y = (this.globalDY < 0) ? (this.globalDY * layer.rY) % this.attributes.tileSize : this.globalDY * layer.rY;
+
+			while (tileYIndex < layer.tileCountY && y < this.canvasHeight) {
+
+				//
+
+				let url = "/slide/" + this.currentLayerIndex + "/" + tileXIndex + "_" + tileYIndex + ".jpeg";
+				if (url in layer.images) {
+					if (layer.images[url] != null) c.drawImage(layer.images[url], x, y);
+				}
+				else {
+					layer.images[url] = null;
+
+					// This loadImage belongs to p5?
+
+					let img = new Image();	
+					img.src = url;
+
+					// Hack
+					let self = this;
+
+					img.onload = function() {
+						layer.images[url] = img;
+						self.display(c);
+					}
+
+				}
+
+				//
+
+				y += this.tileSize;
+				tileYIndex++;
+			}
+			x += this.tileSize;
+			tileXIndex++;
+		}
 	}
 
 	handleTranslation(dx, dy) {
@@ -73,7 +132,6 @@ class Pyramid {
 	}
 
 	handleZoom(dz) {
-
 		let previousLayerWidth = this.layers[this.currentLayerIndex].width;
 		let previousLayerHeight = this.layers[this.currentLayerIndex].height;
 		let previousLayerRx = this.layers[this.currentLayerIndex].rX;
@@ -93,7 +151,5 @@ class Pyramid {
 		this.globalDY += (previousLayerHeight - this.layers[this.currentLayerIndex].height) / (2 * (previousLayerRy - this.layers[this.currentLayerIndex].rY))**2;
 
 		console.log("Current Layer: " + this.layers[this.currentLayerIndex].level + ": " + this.layers[this.currentLayerIndex].width + "x" + this.layers[this.currentLayerIndex].height);
-
 	}
 }
-

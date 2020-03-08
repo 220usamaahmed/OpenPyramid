@@ -110,12 +110,12 @@ dmypy.json
 # End of https://www.gitignore.io/api/python
 
 # Python virtual environment
-/venv
+src/venv
 
 # OpenSlide DLL files
-/dll_includes/*
-!/dll_includes/README.md
+src/dll_includes/*
+!src/dll_includes/README.md
 
 # SVS Image Files
-/svs_images/*
-!/svs_images/README.md
+src/svs_images/*
+!src/svs_images/README.md

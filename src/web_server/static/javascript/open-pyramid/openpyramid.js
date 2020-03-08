@@ -65,40 +65,39 @@ class OpenPyramid {
 			this.pyramid = pyramid;
 
 			// Hack
-			let self = this;
+			let that = this;
 
 			// Event handling for canvas
 			canvas.addEventListener("wheel", function(event) {
-				self.pyramid.handleZoom(event.deltaY / 100);
-				self.draw();
+				that.pyramid.handleZoom(event.deltaY / 100);
+				that.draw();
 				
 				return false;
 			}, false);
 
 			canvas.addEventListener("mousedown", function(event) {
-				self.translationStartX = event.clientX;
-				self.translationStartY = event.clientY;
-				self.mouseDown = true;
+				that.translationStartX = event.clientX;
+				that.translationStartY = event.clientY;
+				that.mouseDown = true;
 
 				return false;
 			}, false);
 
 			canvas.addEventListener("mouseup", function(event) {
-				self.mouseDown = false;
+				that.mouseDown = false;
 
 				return false;
 			}, false);
 
 			canvas.addEventListener("mousemove", function(event) {
-				if (self.mouseDown) {
-					let translationX = event.clientX - self.translationStartX;
-					let translationY = event.clientY - self.translationStartY;
-					self.pyramid.handleTranslation(translationX, translationY);
-					console.log(event);
-					self.translationStartX = event.clientX;
-					self.translationStartY = event.clientY;
+				if (that.mouseDown) {
+					let translationX = event.clientX - that.translationStartX;
+					let translationY = event.clientY - that.translationStartY;
+					that.pyramid.handleTranslation(translationX, translationY);
+					that.translationStartX = event.clientX;
+					that.translationStartY = event.clientY;
 
-					self.draw();
+					that.draw();
 				}
 			});
 
@@ -114,57 +113,3 @@ class OpenPyramid {
 	}
 
 }
-
-
-// function setup() {}
-
-/*
-
-const DEMO_DZI_URL = "http://127.0.0.1:5000/slide";
- 
-let pyramid = null;
-
-function setup() {
-	createCanvas(1024, 800);
-	Pyramid.initialize(DEMO_DZI_URL, width, height).then(p => pyramid = p);
-}
-
-function draw() {
-	background(27, 27, 37);
-	if (pyramid != null) { 
-		pyramid.display();
-
-		noLoop();
-	}
-}
-
-function mousePressed() {
-	if (mouseButton == LEFT) {
-		translationStartX = mouseX;
-		translationStartY = mouseY;
-	}
-
-	return false;
-}
-
-function mouseDragged() {
-	if (mouseButton == LEFT) {
-		let translationX = mouseX - translationStartX;
-		let translationY = mouseY - translationStartY;
-		if (pyramid != null) pyramid.handleTranslation(translationX, translationY);
-		translationStartX = mouseX;
-		translationStartY = mouseY;
-		redraw();
-	}
-
-	return false;
-}
-
-function mouseWheel(event) {
-	if (pyramid != null) pyramid.handleZoom(event.delta / 100);
-	redraw();
-
-	return false;
-}
-
-*/

@@ -150,6 +150,6 @@ class Pyramid {
 		this.globalDX += (previousLayerWidth - this.layers[this.currentLayerIndex].width) / (2 * (previousLayerRx - this.layers[this.currentLayerIndex].rX))**2;
 		this.globalDY += (previousLayerHeight - this.layers[this.currentLayerIndex].height) / (2 * (previousLayerRy - this.layers[this.currentLayerIndex].rY))**2;
 
-		console.log("Current Layer: " + this.layers[this.currentLayerIndex].level + ": " + this.layers[this.currentLayerIndex].width + "x" + this.layers[this.currentLayerIndex].height);
+		console.log("Current Layer: " + this.currentLayerIndex + ": " + this.layers[this.currentLayerIndex].width + "x" + this.layers[this.currentLayerIndex].height);
 	}
 }

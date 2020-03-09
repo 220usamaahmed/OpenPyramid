@@ -9,7 +9,7 @@ class DeepZoomImage {
      * @param 	{String} 	DZI_URL 		The url where the DZI is placed.
      * @param 	{Number} 	canvasWidth 	The width of the canvas on which to display the DZI
      * @param 	{Number} 	canvasHeight 	The height of the canvas on which to display the DZI
-     * @return 	{Promise} 					A promise which when resolved gives an DeepZoomImage object
+     * @returns {Promise} 					A promise which when resolved gives an DeepZoomImage object
      */
     static async initialize(DZI_URL, canvasWidth, canvasHeight) {
         let attributesURL = DZI_URL + "/dzi";
@@ -41,6 +41,7 @@ class DeepZoomImage {
         this.canvasHeight = canvasHeight;
         this.globalDX = 0;
         this.globalDY = 0;
+        this.largestFittingLayerIndex = 0;
         this.currentLayerIndex = 0;
         this.tileSize = attributes.tileSize;
         this.initializeLayers(canvasWidth, canvasHeight);
@@ -83,7 +84,13 @@ class DeepZoomImage {
             if (dimensions[i][0] <= this.canvasWidth && dimensions[i][1] <= this.canvasHeight) this.currentLayerIndex = i;
         }
 
-        // Centering Layers
+        this.largestFittingLayerIndex = this.currentLayerIndex;
+
+        this.centerLayers();
+        
+    }
+
+    centerLayers() {
         this.globalDX = (this.canvasWidth - this.layers[this.currentLayerIndex].width) / (2 * this.layers[this.currentLayerIndex].rX);
         this.globalDY = (this.canvasHeight - this.layers[this.currentLayerIndex].height) / (2 * this.layers[this.currentLayerIndex].rY);
     }
@@ -155,6 +162,9 @@ class DeepZoomImage {
      * @param {Number} dz The amount zoomed 
      */
     handleZoom(dz) {
+
+        if (dz == 0) return;
+
         let previousLayerWidth = this.layers[this.currentLayerIndex].width;
         let previousLayerHeight = this.layers[this.currentLayerIndex].height;
         let previousLayerRx = this.layers[this.currentLayerIndex].rX;
@@ -175,4 +185,5 @@ class DeepZoomImage {
 
         console.log("Current Layer: " + this.currentLayerIndex + ": " + this.layers[this.currentLayerIndex].width + "x" + this.layers[this.currentLayerIndex].height);
     }
+
 }

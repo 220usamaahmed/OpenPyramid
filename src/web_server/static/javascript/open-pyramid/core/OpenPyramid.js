@@ -10,13 +10,16 @@ class OpenPyramid {
      * @param {Dictionary} config The config settings for displaying the DZI
      */
     constructor(config) {
+        this.config = config;
+
         // Initializing Canvas
-        let canvasHolder = document.getElementById(config.canvasHolderID);
+        this.canvasHolder = document.getElementById(config.canvasHolderID);
         let canvas = document.createElement("canvas");
-        canvas.width = canvasHolder.clientWidth;
-        canvas.height = canvasHolder.clientHeight;
-        canvasHolder.appendChild(canvas);
+        canvas.width = this.canvasHolder.clientWidth;
+        canvas.height = this.canvasHolder.clientHeight;
+        this.canvasHolder.appendChild(canvas);
         this.c = canvas.getContext("2d");
+        
         this.mouseDown = false;
 
         // Initializing DeepZoomImage
@@ -67,6 +70,42 @@ class OpenPyramid {
     draw() {
         this.c.clearRect(0, 0, innerWidth, innerHeight);
         this.dzi.display(this.c);
+    }
+
+    /**
+     * @returns {Object} Canvas Holder Div
+     */
+    getCanvasHolder() {
+        return this.canvasHolder;
+    }
+
+    /**
+     * Translate based on pixel values on the canvas
+     * 
+     * @param {Number} dx The number of pixels to shift in the x-axis
+     * @param {Number} dy The number of pixels to shift in the y-axis
+     */
+    translate(dx, dy) {
+        this.dzi.handleTranslation(dx, dy);
+        this.draw();
+    }
+
+    /**
+     * @param {Number} dz The amout to zoom in. A value of 1 will zoom in one layer
+     * and and value of -1 will zoom out one layer.
+     */
+    zoom(dz) {
+        this.dzi.handleZoom(-Math.round(dz));
+        this.draw();
+    }
+
+    /**
+     * Zooms in/out onto the largest layer that fits on the canvas and centers it.
+     */
+    resetZoomAndTranslation() {
+        this.dzi.handleZoom(this.dzi.currentLayerIndex - this.dzi.largestFittingLayerIndex);
+        this.dzi.centerLayers();
+        this.draw();
     }
 
 }

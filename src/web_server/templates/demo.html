@@ -7,10 +7,23 @@
 </head>
 <body>
 
-	<div id="op-canvas-holder"></div>
+	<div id="op-canvas-holder">
+		<!-- <div class="op-toolbar">
+			<button>
+				<img src="{{ url_for('static', filename='images/zoom_in-24px.svg') }}">
+			</button>
+			<button>
+				<img src="{{ url_for('static', filename='images/zoom_out-24px.svg') }}">
+			</button>
+			<button>
+				<img src="{{ url_for('static', filename='images/zoom_out_map-24px.svg') }}">
+			</button>
+		</div> -->
+	</div>
 
-	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/DeepZoomImage.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/OpenPyramid.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/core/DeepZoomImage.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/core/OpenPyramid.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/addons/Toolbar.js') }}"></script>
 
 	<script type="text/javascript">
 		
@@ -18,6 +31,8 @@
 			canvasHolderID: "op-canvas-holder",
 			url: "http://127.0.0.1:5000/slide",
 		});
+
+		let toolbar = new Toolbar(op);
 
 	</script>
 

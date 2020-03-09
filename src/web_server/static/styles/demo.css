@@ -6,6 +6,40 @@
 #op-canvas-holder {
 	width: 100vw;
 	height: 100vh;
+	position: relative;
 
 	background-color: #201921;
+}
+
+.op-toolbar {
+	position: absolute;
+	top: 16px;
+	left: 16px;
+	height: 48px;
+	background-color: rgba(12, 12, 12, 0.88);
+	border-radius: 24px;
+	padding: 0 24px;
+}
+
+.op-toolbar button {
+	background-color: transparent;
+	border: none;
+	width: 48px;
+	height: 48px;
+	outline: none;
+	transition: background-color 100ms ease-in;
+}
+
+.op-toolbar button:hover {
+	background-color: #E1BEE7;
+}
+
+.op-toolbar button:active {
+	background-color: #BA68C8;
+}
+
+.op-toolbar button img {
+	width: 24px;
+	height: 24px;
+	margin: 12px;
 }

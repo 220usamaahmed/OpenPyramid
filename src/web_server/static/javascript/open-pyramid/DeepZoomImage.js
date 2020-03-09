@@ -4,7 +4,7 @@ class DeepZoomImage {
      * Uses the DZI_URL to fetch the attributes of the DZI in order to create
      * a new DeepZoomImage object and return it.
      * 
-     * TODO: Error Handling for the request being made.
+     * @todo Error Handling for the request being made.
      * 
      * @param 	{String} 	DZI_URL 		The url where the DZI is placed.
      * @param 	{Number} 	canvasWidth 	The width of the canvas on which to display the DZI
@@ -92,6 +92,7 @@ class DeepZoomImage {
      * Figures out which tiles need to be dispalyed based on zoom level and position.
      * If that tile is not in cache it requests it to be placed there and once the tile
      * has been loaded calls itself. If the image is in cache it displays it on the canvas.
+     * 
      * @param {Canvas Context} c The 2D canvas context to draw on 
      */
     display(c) {
@@ -137,7 +138,8 @@ class DeepZoomImage {
     }
 
     /**
-     * Calculates how much the image has shifted based on which layer is in view
+     * Calculates how much the image has shifted based on which layer is in view.
+     * 
      * @param {Number} dx The amount of pixels shifted on the x-axis
      * @param {Number} dy The amount of pixels shifted on the y-axis 
      */
@@ -149,6 +151,7 @@ class DeepZoomImage {
     /**
      * Switches layer based on the zoom amount given and shifts the image such that
      * the content at the center of the canvas stays in place.
+     * 
      * @param {Number} dz The amount zoomed 
      */
     handleZoom(dz) {

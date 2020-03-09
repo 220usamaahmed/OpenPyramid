@@ -6,6 +6,7 @@ class OpenPyramid {
      * 2. Initialzes the DeepZoomImage object.
      * 3. Once the DeepZoomObject has been initialzed it adds the event handlers
      * 	  and calls the draw function.
+     * 
      * @param {Dictionary} config The config settings for displaying the DZI
      */
     constructor(config) {

@@ -90,6 +90,9 @@ class DeepZoomImage {
         
     }
 
+    /**
+     * Centers the layer being drawn in the canvas
+     */
     centerLayers() {
         this.globalDX = (this.canvasWidth - this.layers[this.currentLayerIndex].width) / (2 * this.layers[this.currentLayerIndex].rX);
         this.globalDY = (this.canvasHeight - this.layers[this.currentLayerIndex].height) / (2 * this.layers[this.currentLayerIndex].rY);
@@ -103,6 +106,8 @@ class DeepZoomImage {
      * @param {Canvas Context} c The 2D canvas context to draw on 
      */
     display(c) {
+
+        // TODO: Make this a class variable
         let layer = this.layers[this.currentLayerIndex];
 
         // Where to start drawing on the x-axis and which tile to start with
@@ -142,6 +147,24 @@ class DeepZoomImage {
             x += this.tileSize;
             tileXIndex++;
         }
+    }
+
+    /**
+     * @returns {Number} The x-coordinate at which the DZI begins on the canvas
+     */
+    getCanvasX() {
+        let layer = this.layers[this.currentLayerIndex];
+        
+        return this.globalDX * layer.rX;
+    }
+    
+    /**
+     * @returns {Number} The y-coordinate at which the DZI begins on the canvas
+     */
+    getCanvasY() {
+        let layer = this.layers[this.currentLayerIndex];
+
+        return this.globalDY * layer.rY;
     }
 
     /**

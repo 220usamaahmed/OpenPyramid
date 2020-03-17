@@ -1,6 +1,10 @@
-class Toolbar {
+class Toolbar extends Addon {
 
-    constructor(op) {
+    /**
+     * 
+     * @param {Object} op OpenPyramid object
+     */
+    initialize(op) {
         
         this.toolbar = document.createElement("div");
         this.toolbar.classList.add("op-toolbar");

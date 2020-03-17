@@ -8,31 +8,28 @@
 <body>
 
 	<div id="op-canvas-holder">
-		<!-- <div class="op-toolbar">
-			<button>
-				<img src="{{ url_for('static', filename='images/zoom_in-24px.svg') }}">
-			</button>
-			<button>
-				<img src="{{ url_for('static', filename='images/zoom_out-24px.svg') }}">
-			</button>
-			<button>
-				<img src="{{ url_for('static', filename='images/zoom_out_map-24px.svg') }}">
-			</button>
-		</div> -->
+		<!-- <div class="op-minimap"> -->
+			<!-- <img src="slide/8/0_0.jpeg"> -->
+			<!-- <div class="viewer-box" id="viewer-box"></div> -->
+		<!-- </div> -->
 	</div>
 
 	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/core/DeepZoomImage.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/core/OpenPyramid.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/addons/Addon.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/addons/Toolbar.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='javascript/open-pyramid/addons/MiniMap.js') }}"></script>
 
 	<script type="text/javascript">
 		
 		let op = new OpenPyramid({
 			canvasHolderID: "op-canvas-holder",
 			url: "http://127.0.0.1:5000/slide",
+			addons: [new Toolbar(), new MiniMap()]
 		});
 
-		let toolbar = new Toolbar(op);
+		// let toolbar = new Toolbar(op);
+		// let minimap = new MiniMap(op);
 
 	</script>
 

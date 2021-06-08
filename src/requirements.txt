@@ -4,5 +4,5 @@ itsdangerous==1.1.0
 Jinja2==2.11.1
 MarkupSafe==1.1.1
 openslide-python==1.1.1
-Pillow==7.0.0
+Pillow==8.2.0
 Werkzeug==1.0.0

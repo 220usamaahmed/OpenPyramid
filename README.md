@@ -1,3 +1,6 @@
+## Disclaimer
+I started this project out of academic curiosity. You might find some interesting/useful snippets of code in here but its incomplete and probably won't work for you.
+
 ![header](images/header.png)
 
 ## About
